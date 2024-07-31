@@ -1,20 +1,22 @@
 "use client";
 
-import { Bell, Menu, Settings, SlidersIcon, Sun } from "lucide-react";
+import { useSidebarAndMode } from "@/app/hooks/useSidebarAndMode";
+import { Bell, Menu, Moon, Settings, Sun } from "lucide-react";
 import Link from "next/link";
 
 export const Navbar = () => {
+  const { toggleSidebar, toggleDarkMode, isDarkMode } = useSidebarAndMode();
+
   return (
     <div className="flex justify-between items-center w-full mb-7">
       {/* LEFT SIDE */}
       <div className="flex justify-between items-center gap-5">
         <button
           className="rounded-full bg-gray-100 p-3 hover:bg-blue-100"
-          onClick={() => console.log("hw")}
+          onClick={toggleSidebar}
         >
           <Menu className="h-4 w-4" />
         </button>
-        <span className="text-xl font-bold ml-2">Dashboard</span>
 
         <div className="relative">
           <input
@@ -30,10 +32,14 @@ export const Navbar = () => {
 
       {/* RIGHT SIDE */}
       <div className="flex items-center justify-between gap-5">
-        <div className="hidden md:flex justify-between items-center gap-5">
+        <div className="hidden md:flex justify-between items-center gap-5 pl-2">
           <div>
-            <button onClick={() => {}}>
-              <Sun className="cursor-pinter text-gray-500" size={24} />
+            <button onClick={toggleDarkMode}>
+              {isDarkMode ? (
+                <Sun className="cursor-pointer text-gray-500" size={24} />
+              ) : (
+                <Moon className="cursor-pointer text-gray-500" size={24} />
+              )}
             </button>
           </div>
           <div className="relative">
@@ -48,11 +54,10 @@ export const Navbar = () => {
             <div className="w-9 h-9">image</div>
             <span className="font-semibold">R.Can.</span>
           </div>
-
-          <Link href="/settings">
-            <Settings className="cursor-pointer text-gray-500" size={24} />
-          </Link>
         </div>
+        <Link href="/settings">
+          <Settings className="cursor-pointer text-gray-500" size={24} />
+        </Link>
       </div>
     </div>
   );
